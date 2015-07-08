@@ -1,0 +1,39 @@
+Rails API Notes
+
+Scaffold player
+    Rails g scaffold player name:string country:string number:integer
+Namespace api
+    namespace :api do …
+    class Api::PlayersController < ApplicationController …
+Inflect Api to API
+    see config/initializers/inflections.rb
+Versioning
+    namespace :v1 do …
+Subdomain
+    namespace :api, constraints: { subdomain: ‘api’ } do …
+    ***** change localhost to lvh.me
+Remove /api in path
+    namespace :api, constraints: {subdomain: ‘api’}, path: ‘’, do …
+Default to JSON
+    namespace :api, constraints: {subdomain: ‘api’}, path: ‘’, defaults: {format: ‘json’}, do …
+
+
+
+
+
+
+
+subdomain on localhost: api.lvh.me:3000
+    sauce: Developing and testing rails applications with subdomains
+
+curl GET show:
+    curl http://api.lvh.me:3000/v1/players/3 -i
+
+curl GET index:
+    curl http://api.lvh.me:3000/v1/players -i
+
+curl POST create:
+    curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d ' {"player":{"country":"Brazil","number":"10"}}'  http://localhost:3000/players
+
+curl PUT update:
+    curl -H "Accept: application/json" -H "Content-type: application/json" -X PUT -d ' {"player":{"country":"Brazil","number":"10","name":"Marta"}}'  http://api.lvh.me:3000/v1/players/3 -i
